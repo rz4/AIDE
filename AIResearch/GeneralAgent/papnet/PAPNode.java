@@ -32,5 +32,14 @@ public class PAPNode {
 		this.value = value;
 	}
 	
+	public String toString(){
+		String s = "[Node: ( ";
+		for(String p : percept){
+			s += p + " ";
+		}
+		s += ") " + visits + " " + value + " ]" ;
+		return s;
+	}
+	
 	
 }

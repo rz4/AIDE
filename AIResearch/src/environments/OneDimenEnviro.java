@@ -12,7 +12,7 @@ public class OneDimenEnviro extends SingleAgentEnviro {
 		agentPos = 0; //Change initial position of agent here.
 		String[] a = {"L", "R"};
 		actionList = a;
-		String[] g = {"8"};//Change goal here.
+		String[] g = {"9"};//Change goal here.
 		goal = g;
 		enviro = new String[size];
 		for(int i = 0; i < size; i++){
