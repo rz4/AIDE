@@ -1,7 +1,7 @@
 package core;
 
 import agents.RandomAgent;
-import environments.base.OneDimenEnviro;
+import environments.OneDimenEnviro;
 
 public class DesktopLauncher {
 

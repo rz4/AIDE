@@ -1,4 +1,4 @@
-package environments.base;
+package environments;
 
 public class OneDimenEnviro extends SingleAgentEnviro {
 

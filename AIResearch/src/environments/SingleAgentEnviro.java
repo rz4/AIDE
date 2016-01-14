@@ -1,4 +1,4 @@
-package environments.base;
+package environments;
 
 import agents.Agent;
 
