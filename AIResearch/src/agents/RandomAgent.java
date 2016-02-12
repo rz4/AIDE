@@ -3,6 +3,8 @@ package agents;
 import java.util.Random;
 
 /**
+ * Version 1.0
+ * 
  * RandomAgent is an agent that chooses a random
  * action from the list of possible actions.
  * 
@@ -12,7 +14,7 @@ import java.util.Random;
  * This agent is used to compare effectiveness of 
  * other agents.
  * 
- * @author Rafael Zamora
+ * @author rz4
  *
  */
 public class RandomAgent extends Agent{
@@ -27,7 +29,7 @@ public class RandomAgent extends Agent{
 	@Override
 	public void compute() {
 		updateGoals(nextPercepts);
-		if(goalsMet()) setActive(false);
+		if(goalsActive()) setActive(false);
 		else nextAction = possibleActions[rand.nextInt(possibleActions.length)];
 		
 	}

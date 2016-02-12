@@ -20,7 +20,7 @@ public class GeneralAgent extends Agent{
 	public void compute() {
 		net.updateNet(nextPercepts, goals.get(0), nextAction);
 		updateGoals(nextPercepts);
-		if(goalsMet()) setActive(false);
+		if(goalsActive()) setActive(false);
 		else nextAction = possibleActions[rand.nextInt(possibleActions.length)];
 	}
 	

@@ -20,11 +20,11 @@ public abstract class AgentEnviro {
 	
 	public abstract void initEnviro();
 	
-	public abstract String toString();
+	public abstract void updateEnviro(Action action);
 	
 	public abstract Percept[] getPerceptsforAgent();
-	
-	public abstract void updateEnviro(Action action);
+
+	public abstract String toString();
 	
 	public boolean checkforErrors(){
 		if(agents.isEmpty()){
@@ -42,10 +42,14 @@ public abstract class AgentEnviro {
 		return false;
 	}
 	
+	public void addAgent(Agent agent){
+		agents.add(agent);
+	}
+	
 	public void initAgents(){
 		for(Agent agent: agents){
 			agent.setActions(actionList);
-			agent.addGoal(goal);
+			agent.addGoal(new Goal(goal));
 			agent.setActive(true);
 		}
 	}
@@ -60,7 +64,7 @@ public abstract class AgentEnviro {
 		}		
 	}
 
-	public boolean areagentsActive(){
+	public boolean agentsActive(){
 		boolean flag = false;
 		for(Agent a : agents) if(a.isActive()) flag = true;
 		return flag;
@@ -74,16 +78,12 @@ public abstract class AgentEnviro {
 		cycle = 0;
 		
 		if(verbose) System.out.println("Simulation Started:");
-		while(areagentsActive()){
+		while(agentsActive()){
 			updateAgents();
 			cycle ++;
 			if(verbose) System.out.println(toString());
 		}
 		if(verbose) System.out.println("Simulation Finished.");
-		System.out.printf("\nTotal Number of Actions to Goal: %s\n",cycle);	
-	}
-	
-	public void addAgent(Agent agent){
-		agents.add(agent);
+		System.out.printf("\nTotal Number of Actions to Goal: %s\n\n",cycle);	
 	}
 }

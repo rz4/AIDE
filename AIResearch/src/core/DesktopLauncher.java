@@ -6,7 +6,7 @@ import environments.OneDimenEnviro;
  * DesktopLauncher is the main driver of 
  * the AI simulations.
  * 
- * @author Rafael Zamora
+ * @author rz4
  *
  */
 public class DesktopLauncher {

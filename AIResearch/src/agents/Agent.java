@@ -3,6 +3,8 @@ package agents;
 import java.util.ArrayList;
 
 /**
+ * Version 1.0
+ * 
  * Abstract Class for agents which allows
  * agent to interface with environments.
  * 
@@ -23,7 +25,7 @@ import java.util.ArrayList;
  * This should be used to determine when the agent
  * should no longer be active.
  * 
- * @author Rafael Zamora
+ * @author rz4
  *
  */
 public abstract class Agent {
@@ -68,11 +70,20 @@ public abstract class Agent {
 	/**
 	 * Method checks every goal against Percept[]
 	 * and sets goals activity to false if met.
+	 * Checks if goals are negative or positive.
+	 * 
 	 * @param pa
 	 */
 	public void updateGoals(Percept[] pa){
 		for(Goal g : goals)
-			if(g.equalsPercepts(pa)) g.setActive(false);
+			if(g.getWeight() >= 0){
+				if(g.equalsPercepts(pa)) g.setActive(false);
+				else if(g.isConstant()) g.setActive(true);
+			}
+			else{
+				if(!g.equalsPercepts(pa)) g.setActive(false);
+				else if(g.isConstant()) g.setActive(true);
+			}
 	}
 	
 	/**
@@ -81,7 +92,7 @@ public abstract class Agent {
 	 * 
 	 * @return boolean flag
 	 */
-	public boolean goalsMet(){
+	public boolean goalsActive(){
 		boolean flag = true;
 		for(Goal g : goals) if(g.isActive()) flag = false;
 		return flag;

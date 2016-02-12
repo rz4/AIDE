@@ -1,5 +1,12 @@
 package agents;
 
+/**
+ * Version 1.0
+ * 
+ * @author rz4
+ *
+ * @param <T>
+ */
 public class Action<T> {
 
 	protected T action;

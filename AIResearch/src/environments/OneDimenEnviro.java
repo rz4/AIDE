@@ -17,9 +17,9 @@ public class OneDimenEnviro extends AgentEnviro {
 		agentPos = 5; //Change initial position of agent here.
 		Action[] a = {new Action("L"), new Action("R")};
 		actionList = a;
-		goalPos = 9;
-		Percept[] g = {new Percept(Integer.toString(goalPos))};//Change goal here.
-		goal = new Goal(g);
+		goalPos = 9;//Change goal here.
+		Percept[] g = {new Percept(Integer.toString(goalPos))};
+		goal = new Goal(g, 1.0f, false);
 		enviro = new String[size];
 		for(int i = 0; i < size; i++){
 			enviro[i] = Integer.toString(i);

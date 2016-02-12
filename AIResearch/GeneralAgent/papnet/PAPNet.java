@@ -41,7 +41,7 @@ public class PAPNet {
 	
 	public PAPNode getNode(Percept[] pa){
 		for(PAPNode n : nodes){
-			if(Percept.perceptsEquals(n.getPercepts(), pa)) return n;
+			if(Percept.perceptsEqual(n.getPercepts(), pa)) return n;
 		}
 		return null;
 	}
