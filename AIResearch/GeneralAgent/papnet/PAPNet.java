@@ -2,6 +2,10 @@ package papnet;
 
 import java.util.ArrayList;
 
+import agents.Action;
+import agents.Goal;
+import agents.Percept;
+
 public class PAPNet {
 	
 	private ArrayList<PAPNode> nodes;
@@ -13,10 +17,10 @@ public class PAPNet {
 		routes = new ArrayList<PAPRoute>();
 	}
 	
-	public void updateNet(String[] percept, String[] goal, String action){
+	public void updateNet(Percept[] percept, Goal g, Action action){
 		PAPNode n = getNode(percept);
 		if(n == null){
-			n = new PAPNode(percept, perceptSimilar(percept, goal));
+			n = new PAPNode(percept, g.similarPercepts(percept));
 			nodes.add(n);
 		}else n.incrVisits();
 		
@@ -31,9 +35,13 @@ public class PAPNet {
 		currentNode = n;
 	}
 	
-	public PAPNode getNode(String[] percept){
+	public void normalizeNet(){
+		
+	}
+	
+	public PAPNode getNode(Percept[] pa){
 		for(PAPNode n : nodes){
-			if(perceptSame(n.getPercept(), percept)) return n;
+			if(Percept.perceptsEquals(n.getPercepts(), pa)) return n;
 		}
 		return null;
 	}
@@ -46,20 +54,18 @@ public class PAPNet {
 		return null;
 	}
 	
-	public static boolean perceptSame(String[] percept1, String[] percept2){
-		boolean flag = true;
-		for(int i = 0; i < percept1.length; i++){
-			if(!percept1[i].equals(percept2[i])) flag = false;
-		}
-		return flag;
+	public ArrayList<PAPRoute> findRoutes(PAPNode parent, PAPNode child){
+		ArrayList<PAPRoute> rts = new ArrayList<PAPRoute>();
+		
+		return rts;
 	}
 	
-	public static float perceptSimilar(String[] percept1, String[] percept2){
-		float val = 0;
-		for(int i = 0; i < percept1.length; i++){
-			if(percept1[i].equals(percept2[i])) val ++;
-		}
-		return val / percept1.length;
+	public ArrayList<PAPNode> getNodes(){
+		return nodes;
+	}
+	
+	public ArrayList<PAPRoute> getRoutes(){
+		return routes;
 	}
 	
 	public String toString(){
@@ -74,5 +80,4 @@ public class PAPNet {
 		}
 		return s;
 	}
-
 }

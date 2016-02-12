@@ -1,18 +1,22 @@
 package papnet;
 
+import agents.Percept;
+
 public class PAPNode {
 	
-	private String[] percept;
+	private Percept[] percept;
 	private int visits;
 	private float value;
+	private float mtsValue;
 	
-	public PAPNode(String[] per, float val){
+	public PAPNode(Percept[] per, float val) {
 		percept = per;
 		visits = 1;
 		value = val;
+		mtsValue = val;
 	}
 
-	public String[] getPercept() {
+	public Percept[] getPercepts() {
 		return percept;
 	}
 
@@ -20,26 +24,32 @@ public class PAPNode {
 		return visits;
 	}
 
-	public void incrVisits() {
+	public void incrVisits(){
 		visits ++;
+	}
+	
+	public void resetVisits(){
+		visits = 1;
 	}
 
 	public float getValue() {
 		return value;
 	}
 
-	public void setValue(float value) {
-		this.value = value;
+	public float getMTSValue(){
+		return mtsValue;
+	}
+	
+	public void setMTSValue(float value) {
+		mtsValue = value;
 	}
 	
 	public String toString(){
 		String s = "[Node: ( ";
-		for(String p : percept){
+		for(Percept p : percept){
 			s += p + " ";
 		}
-		s += ") " + visits + " " + value + " ]" ;
+		s += ") " + visits + " " + value + " " + mtsValue + " ]" ;
 		return s;
 	}
-	
-	
 }
