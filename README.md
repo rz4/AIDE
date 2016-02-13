@@ -1,3 +1,4 @@
+![AIDE Logo](images/AIDE_logo.png)
 # AIDE - A.I. Development Environment
 Version 0.1
 
@@ -54,15 +55,21 @@ update the agent as long as the agent is active.
 percepts, setting them inactive if they have been met.
 `goalsActive()` is used to determine if the agents goals are met.
 If all goals have been met, the agent will be set inactive.
+### Environments
+The following code is used to define a **One Dimensional Environment**:
 
+### Simulators
+The following code is used to define a **Test Simulation** for
+a **Random Agent** interfaced with a **One Dimensional
+Environment**:
 
 ## Motivation
 
 This project is designed with the intention of rapid prototyping
 agents and environments for A.I. research. The project will be
 used to facilitate Artificial General Intelligence research by
-creating a framework for agents to be tested in multiple unique
-and unknown environments.
+creating a simple framework for agents to be tested in multiple
+unique and unknown environments.
 
 ## Installation
 
