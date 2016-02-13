@@ -11,13 +11,13 @@ agents and environments. It also contains tools to run
 simulations and gather results.
 
 **Agents** will have access to the following information:
-- Array of legal *Actions* in an **Environment**.
-- Array of *Percepts* passed from **Environment** each cycle.
-- Array of *Goal Percepts* for the **Environment**.
+- List of legal *Actions* for the **Environment**.
+- *Percepts* passed from the **Environment** each update cycle.
+- List of *Goals* for the **Environment**.
 
 Using this input information, the **Agents** should decide what
 *Action* to take, and the **Environment** will be updated
-according to the selected *Action*.
+according to the selected *Action*. The simulations end once all **Agents** are inactive, or the max cycle limit has been reached.
 
 ## Code Example
 ### Agents
@@ -45,15 +45,16 @@ public class RandomAgent extends Agent{
 All agent behavior should be defined in the `compute()` method.
 This method will be called during the simulation, after the
 environment has passed `nextPercepts` to the agent and before the
-environment updates using the agent's`nextAction'.
+environment updates using the agent's`nextAction`.
 
-The **Random Agent** selects a random action from `possibleActions`. The
-environment continues to pass on sensory information and actuate
-the agent's actions as long as the agent is active.
-`goalsActive()` is used to determine if the agents goals are met.
-If all goals have been met, then the agent will be set inactive.
+In this code example, the **Random Agent** selects a random
+action from `possibleActions`. The environment will continue to
+update the agent as long as the agent is active.
 `updateGoals(nextPercept)` is used to check the goals against the
 percepts, setting them inactive if they have been met.
+`goalsActive()` is used to determine if the agents goals are met.
+If all goals have been met, the agent will be set inactive.
+
 
 ## Motivation
 
@@ -69,5 +70,3 @@ Download and import AIDE.jar into Java project.
 
 **Note:** AIDE is still under development and AIDE.jar may be
 unavailable.
-
-## Future Development
