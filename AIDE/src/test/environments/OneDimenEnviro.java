@@ -17,7 +17,7 @@ public class OneDimenEnviro extends AgentEnviro {
 		size = 10; //Change size of environment here.
 		agentPos = 5; //Change initial position of agent here.
 		Action[] a = {new Action("L"), new Action("R")};
-		actionList = a;
+		legalActions = a;
 		goalPos = 9;//Change goal here.
 		Percept[] g = {new Percept(Integer.toString(goalPos))};
 		goal = new Goal(g, 1.0f, false);
@@ -39,10 +39,10 @@ public class OneDimenEnviro extends AgentEnviro {
 	@Override
 	public void updateEnviro(Action action) {
 		if(action == null) return;
-		else if(actionList[0].equals(action)){
+		else if(legalActions[0].equals(action)){
 			if(agentPos > 0) agentPos --;
 		}
-		else if(actionList[1].equals(action)){
+		else if(legalActions[1].equals(action)){
 			if(agentPos < size-1) agentPos ++;
 		}
 	}
@@ -55,6 +55,7 @@ public class OneDimenEnviro extends AgentEnviro {
 			else if(Integer.parseInt(s) == goalPos) display += "G ";
 			else display += "0 ";
 		}
+		display += "\n";
 		return display;
 	}
 }

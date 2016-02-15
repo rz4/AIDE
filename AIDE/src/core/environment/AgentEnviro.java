@@ -7,11 +7,16 @@ import core.agent.Agent;
 import core.agent.Goal;
 import core.agent.Percept;
 
+/**
+ * Abstract Class
+ * @author rz4
+ *
+ */
 public abstract class AgentEnviro {
 	
 	protected ArrayList<Agent> agents;
 	protected ArrayList<Integer> agentCycles;
-	protected Action[] actionList;
+	protected Action[] legalActions;
 	protected Goal goal;
 	protected int cycle;
 	protected int cycleLimit;
@@ -22,20 +27,20 @@ public abstract class AgentEnviro {
 		cycleLimit = 0;
 	}
 	
-	public abstract void initEnviro();
+	protected abstract void initEnviro();
 	
-	public abstract void updateEnviro(Action action);
+	protected abstract void updateEnviro(Action action);
 	
-	public abstract Percept[] getPerceptsforAgent();
+	protected abstract Percept[] getPerceptsforAgent();
 
 	public abstract String toString();
 	
-	public boolean checkforErrors(){
+	private boolean checkforErrors(){
 		if(agents.isEmpty()){
 			System.out.println("Error: No Agents have been set.");
 			return true;
 		}
-		if(actionList == null){
+		if(legalActions == null){
 			System.out.println("Error: Actions have not been defined.");
 			return true;
 		}
@@ -50,17 +55,17 @@ public abstract class AgentEnviro {
 		agents.add(agent);
 	}
 	
-	public void initAgents(){
+	private void initAgents(){
 		for(Agent agent: agents){
 			agent.initAgent();
-			agent.setActions(actionList);
+			agent.setLegalActions(legalActions);
 			agent.addGoal(new Goal(goal));
 			agent.setActive(true);
 			agentCycles.add(0);
 		}
 	}
 	
-	public void updateAgents(){
+	private void updateAgents(){
 		for(int i = 0; i < agents.size(); i++){
 			Agent agent = agents.get(i);
 			if(agent.isActive()){
@@ -72,7 +77,7 @@ public abstract class AgentEnviro {
 		}		
 	}
 
-	public boolean agentsActive(){
+	protected boolean agentsActive(){
 		boolean flag = false;
 		for(Agent a : agents) if(a.isActive()) flag = true;
 		return flag;

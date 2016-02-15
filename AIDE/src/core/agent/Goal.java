@@ -41,10 +41,31 @@ public class Goal {
 		active = true;
 	}
 	
+	public boolean equals(Goal g){
+		if(g instanceof Goal)
+			return ((Goal) g).goal.equals(goal);
+		else return false;
+	}
+	
+	/**
+	 * Method returns whether the Goal's Percept[] is
+	 * equal to passed Percept[].
+	 * 
+	 * @param pa Percept[]
+	 * @return boolean
+	 */
 	public boolean equalsPercepts(Percept[] pa){
 		return Percept.perceptsEqual(goal, pa);
 	}
 	
+	
+    /**
+	 * Method returns a float value between 0.0 and 1.0 depending on
+	 * how the fraction of Goal Percept[] that are equal to the passed Percept[]s.
+	 *
+	 *@param pa Percept[]
+	 *@return float
+	 */
 	public float similarPercepts(Percept[] pa){
 		return Percept.perceptsSimilar(goal, pa);
 	}
@@ -53,6 +74,13 @@ public class Goal {
 		return weight;
 	}
 	
+	/**
+	 * Method returns a float value of the relative weight value for
+	 * the passed Percept[].
+	 * 
+	 * @param pa
+	 * @return
+	 */
 	public float getRelativeWeight(Percept[] pa){
 		return weight * similarPercepts(pa);
 	}

@@ -20,8 +20,8 @@ import java.util.ArrayList;
  * Environments will continue to simulate as long
  * as agent is active.
  * 
- * This class allows for a goal percept to be set
- * and check if agent has arrived at goal.
+ * This class allows for goals to be defined
+ * and check if agent has met goals.
  * This should be used to determine when the agent
  * should no longer be active.
  * 
@@ -37,33 +37,35 @@ public abstract class Agent {
 	protected boolean active;
 
 	/**
-	 * This method should define the decision making 
+	 * Method should define the decision behavior
 	 * of the agent. This method will be accessed by the 
 	 * environment.
 	 */
 	public abstract void compute();
 	
 	/**
-	 * This method initializes agent for simulations.
+	 * Method initializes agent for simulations.
 	 */
 	public void initAgent(){
 		goals = new ArrayList<Goal>();
+		nextPercepts = null;
+		nextAction = null;
 	}
 	
 	/**
-	 * This method sets the array of possible actions
-	 * the agent can take in order to reach the goal
-	 * percept.
+	 * Method sets the array of legal actions
+	 * the agent can take use in order to meet defined
+	 * goals.
 	 * 
 	 * @param actionList String[]
 	 */
-	public void setActions(Action[] actionList){
+	public void setLegalActions(Action[] actionList){
 		possibleActions = actionList;
 	}
 	
 	/**
-	 * This method sets the goal percept array the
-	 * agent should try to reach.
+	 * Method adds a goal to the list
+	 * goals that need to be met.
 	 * 
 	 * @param goal
 	 */
@@ -76,7 +78,7 @@ public abstract class Agent {
 	 * and sets goals activity to false if met.
 	 * Checks if goals are negative or positive.
 	 * 
-	 * @param pa
+	 * @param pa Percept[]
 	 */
 	public void updateGoals(Percept[] pa){
 		for(Goal g : goals)
@@ -91,7 +93,7 @@ public abstract class Agent {
 	}
 	
 	/**
-	 * This method returns a boolean value indicating 
+	 * Method returns a boolean value indicating 
 	 * whether the agent goals are met.
 	 * 
 	 * @return boolean flag
@@ -103,28 +105,28 @@ public abstract class Agent {
 	}
 	
 	/**
-	 * This method sets the current percept of the agent.
+	 * Method sets the current percept of the agent.
 	 * This method will be accessed by the environment.
 	 *  
-	 * @param percepts String[]
+	 * @param percepts Percept[]
 	 */
 	public void sense(Percept[] percepts){
 		nextPercepts = percepts;
 	}
 	
 	/**
-	 * This method returns the current action the agent
+	 * Method returns the current action the agent
 	 * will take. This method will be accessed by the 
 	 * environment.
 	 * 
-	 * @return nextAction String
+	 * @return nextAction Action
 	 */
 	public Action act(){
 		return nextAction;
 	}
 
 	/**
-	 * This method returns whether the agent is active.
+	 * Method returns whether the agent is active.
 	 * This method will be accessed by the environment.
 	 * 
 	 * @return active boolean
@@ -134,12 +136,11 @@ public abstract class Agent {
 	}
 	
 	/**
-	 * This method sets whether the agent is active.
+	 * Method sets whether the agent is active.
 	 * 
 	 * @param active boolean
 	 */
 	public void setActive(boolean active){
 		this.active = active;
-	}
-	
+	}	
 }

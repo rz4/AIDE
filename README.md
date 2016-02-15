@@ -152,8 +152,8 @@ public class OneDimEnviro_RandomAgent_Test {
 
 }
 ```
-A new **One Dimensional Environment** object is created and a new
-**Random Agent** is added through the `addAgent()` method. A new
+In this code example, a new **One Dimensional Environment** object is created, and a new
+**Random Agent** is added through the `addAgent()` method. A
 **Simulator** is initialized with the environment, the output filename
 for the result data, and the number of times the environment will be
 simulated as the parameters. The simulator is then run by calling the
