@@ -1,4 +1,4 @@
-package core.environments;
+package core.environment;
 
 import java.util.ArrayList;
 

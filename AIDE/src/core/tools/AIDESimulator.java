@@ -1,11 +1,11 @@
-package core;
+package core.tools;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import core.environments.AgentEnviro;
+import core.environment.AgentEnviro;
 
 public class AIDESimulator {
 

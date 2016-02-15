@@ -1,8 +1,6 @@
 package test.tests;
 
-import core.AIDESimulator;
-import core.GeneralAgent;
-import core.environments.AgentEnviro;
+import core.tools.AIDESimulator;
 import test.agents.RandomAgent;
 import test.environments.OneDimenEnviro;
 

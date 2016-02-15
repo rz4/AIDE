@@ -3,7 +3,7 @@ package test.environments;
 import core.agent.Action;
 import core.agent.Goal;
 import core.agent.Percept;
-import core.environments.AgentEnviro;
+import core.environment.AgentEnviro;
 
 public class OneDimenEnviro extends AgentEnviro {
 
@@ -30,17 +30,6 @@ public class OneDimenEnviro extends AgentEnviro {
 	}
 
 	@Override
-	public String toString() {
-		String display = "One Dimensional Environment:\n";
-		for(String s : enviro){
-			if(Integer.parseInt(s) == agentPos) display += "A ";
-			else if(Integer.parseInt(s) == goalPos) display += "G ";
-			else display += "0 ";
-		}
-		return display;
-	}
-
-	@Override
 	public Percept[] getPerceptsforAgent() {
 		Percept[] pa = new Percept[1];
 		pa[0] = new Percept(enviro[agentPos]);
@@ -56,5 +45,16 @@ public class OneDimenEnviro extends AgentEnviro {
 		else if(actionList[1].equals(action)){
 			if(agentPos < size-1) agentPos ++;
 		}
+	}
+	
+	@Override
+	public String toString() {
+		String display = "One Dimensional Environment:\n";
+		for(String s : enviro){
+			if(Integer.parseInt(s) == agentPos) display += "A ";
+			else if(Integer.parseInt(s) == goalPos) display += "G ";
+			else display += "0 ";
+		}
+		return display;
 	}
 }
