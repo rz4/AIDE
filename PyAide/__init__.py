@@ -1,5 +1,8 @@
-import pkgutil
-print([name for _, name, _ in pkgutil.iter_modules(['PyAide'])])
+import types
+
+for key, obj in PyAide.__dict__.iteritems():
+    if type(obj) is types.ModuleType:
+        print key
 
 from Enviros.Enviro import Enviro
 from Agents.Agent import Agent
