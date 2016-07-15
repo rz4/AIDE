@@ -1,12 +1,12 @@
 ![AIDE Logo](images/AIDE_logo.png)
 # AIDE - A.I. Development Environment
-Version 0.1
+Version 0.9.1
 
-Last Updated: **Feb. 15, 2016**
+Last Updated: **July 15, 2016**
 
 Lead Maintainer: [Rafael Zamora](https://github.com/rz4)
 
-**AIDE** is a Java (1.8) library for the development and testing of
+**AIDE** is a Python (3.5) library for the development and testing of
 intelligent agents. It is used to create and interface custom
 agents and environments. It also contains tools for running
 simulations and gathering result data.
@@ -27,7 +27,7 @@ decision behavior of **Agents**.
 Using this input information, the **Agents** should decide what
 *Action* from the list of legal *Actions* to take.
 
-**Environments** can be implemented by extending the `AgentEnviro`
+**Environments** can be implemented by extending the `Enviro`
 class. **Environments** will have the following functions in relation
 to **Agents**:
 - Pass current information of the environment to the **Agents** each
