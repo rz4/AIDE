@@ -194,7 +194,7 @@ unique and unknown environments.
 
 The following ***Pip*** command can be used to install **PyAIDE**:
 ```
-pip install git+https://github.com/rz4/PyyAIDE
+pip install git+https://github.com/rz4/PyAIDE
 ```
 
 ## License
