@@ -190,7 +190,9 @@ unique and unknown environments.
 
 ## Installation
 
-The following ***Pip*** command can be used to install PyAIDE:
+**PyAIDE**'s gui playback feature requires **PyGame** to run.
+
+The following ***Pip*** command can be used to install **PyAIDE**:
 ```
 pip install git+https://github.com/rz4/AIDE
 ```
