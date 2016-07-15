@@ -6,7 +6,7 @@ Author: Rafael Zamora
 Version: 0.01
 Date Updated: 3/10/2016
 """
-from PyAide.Agents.Agent import Agent
+from PyAide import Agent
 from random import seed, choice
 
 class RandomAgent(Agent):

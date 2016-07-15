@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """
 Project: AIDE
-File: EnviroData.py
+File: AIDEGUI.py
 Author: Rafael Zamora
 Version: 0.01
 Date Updated: 6/18/2016

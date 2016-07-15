@@ -12,7 +12,7 @@ Change Log:
 -UPDATED Interface with AIDEGUI
 -REMOVED Random Generation
 """
-from PyAide.Enviros.Enviro import Enviro
+from PyAide import Enviro
 from random import seed, random, randint
 
 '''
