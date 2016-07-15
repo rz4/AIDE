@@ -1,5 +1,5 @@
 import pkgutil
-print([name for _, name, _ in pkgutil.iter_modules(['testpkg'])])
+print([name for _, name, _ in pkgutil.iter_modules(['PyAide'])])
 
 from Enviros.Enviro import Enviro
 from Agents.Agent import Agent
