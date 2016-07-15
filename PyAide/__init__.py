@@ -2,7 +2,7 @@ import types
 
 for key, obj in PyAide.__dict__.iteritems():
     if type(obj) is types.ModuleType:
-        print key
+        print(key)
 
 from Enviros.Enviro import Enviro
 from Agents.Agent import Agent
