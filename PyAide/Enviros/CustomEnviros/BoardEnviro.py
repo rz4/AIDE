@@ -9,7 +9,7 @@ Date Updated: 3/24/2016
 Change Log:
 -ADDED Interface with AIDEGUI
 """
-from Enviros.Enviro import Enviro
+from PyAide import Enviro
 
 class BoardEnviro(Enviro):
 
