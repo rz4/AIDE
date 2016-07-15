@@ -1,3 +1,6 @@
+import pkgutil
+print([name for _, name, _ in pkgutil.iter_modules(['testpkg'])])
+
 from .Enviros.Enviro import Enviro
 from .Agents.Agent import Agent
 from .Enviros.CustomEnviros.BoardEnviro import BoardEnviro
