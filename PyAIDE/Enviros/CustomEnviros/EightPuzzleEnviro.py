@@ -6,7 +6,7 @@ Author: Rafael Zamora
 Version: 1.0
 Date Updated: 6/20/2016
 """
-from PyAide import Enviro
+from PyAIDE import Enviro
 from random import shuffle
 
 class EightPuzzleEnviro(Enviro):
