@@ -1,6 +1,6 @@
 ![AIDE Logo](images/AIDE_logo.png)
 # PyAIDE - Python A.I. Development Environment
-[![Current Version](https://img.shields.io/badge/version-0.9.1-green.svg)]
+![Current Version](https://img.shields.io/badge/version-0.9.1-green.svg)
 
 Last Updated: **July 16, 2016**
 
