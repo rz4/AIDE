@@ -11,6 +11,6 @@ setup(
     description="Python library for the development and testing of intelligent agents.",
     license="GNU",
     keywords="Artificial Intelligence Testing Development",
-    packages=find_packages(exclude=['images']),
+    packages=find_packages(exclude=['images','examples']),
     install_requires = ["pygame"],
 )

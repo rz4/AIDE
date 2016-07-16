@@ -3,7 +3,7 @@
 Project: AIDE
 File: BoardEnviro.py
 Author: Rafael Zamora
-Version: 1.0
+Version: 1.0.0
 Date Updated: 3/24/2016
 
 Change Log:
@@ -11,6 +11,14 @@ Change Log:
 """
 from PyAIDE import Enviro
 
+'''
+BoardEnviro is an environment made for one agent.
+The only agent task is to reach the FinalPos.
+The agent is to do this using the up, down, left, and right actions.
+
+Note: The current default task is hardcoded at (width-1, height-1) coordinates.
+      This can be changes by changing self.state["FinalPos"].
+'''
 class BoardEnviro(Enviro):
 
     def initEnviro(self):

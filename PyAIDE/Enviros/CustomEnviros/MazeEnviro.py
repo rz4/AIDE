@@ -1,10 +1,10 @@
 #!/usr/bin/python3
 """
-Project: AIDE
-File: Enviro.py
+Project: PyAIDE
+File: MazeEnviro.py
 Author: Rafael Zamora
-Version: 1.05
-Date Updated: 6/18/2016
+Version: 1.0.0
+Date Updated: 7/16/2016
 
 Change Log:
 -ADDED Load maze from file functions.
@@ -21,6 +21,7 @@ The only agent task is to reach the lower left tile of the maze.
 The agent is to do this using the up, down, left, and right actions.
 
 Mazes are to be loaded through the setMazeFile() function.
+A Maze file must be set before running.
 
 Note: The current task is hardcoded at (width-1, height-1) coordinates.
       This can be changes by changing self.state["FinalPos"].

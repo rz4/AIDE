@@ -1,14 +1,22 @@
 #!/usr/bin/python3
 """
-Project: AIDE
-File: Enviro.py
+Project: PyAIDE
+File: EightPuzzleEnviro.py
 Author: Rafael Zamora
-Version: 1.0
+Version: 1.0.0
 Date Updated: 6/20/2016
+
+Change Log:
 """
 from PyAIDE import Enviro
 from random import shuffle
 
+'''
+EightPuzzleEnviro is an environment made for one agent.
+The only agent task is to rearrange the puzzle to the solution order.
+The agent is to do this using the push-up, push-down, push-left, and push-right actions.
+
+'''
 class EightPuzzleEnviro(Enviro):
 
     def initEnviro(self):

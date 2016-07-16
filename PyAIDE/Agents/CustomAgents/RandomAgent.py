@@ -1,14 +1,21 @@
 #!/usr/bin/python3
 """
-Project: AIDE
-File: Agent.py
+Project: PyAIDE
+File: RandomAgent.py
 Author: Rafael Zamora
-Version: 0.01
-Date Updated: 3/10/2016
+Version: 1.0.0
+Date Updated: 7/16/2016
+
+Change Log:
 """
 from PyAIDE import Agent
 from random import seed, choice
 
+'''
+RandomAgent is a agent which selects a random actions
+from list of legal actions. The agent will become inactive
+once any task is met.
+'''
 class RandomAgent(Agent):
 
     def compute(self):

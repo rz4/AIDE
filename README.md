@@ -1,8 +1,8 @@
 ![AIDE Logo](images/AIDE_logo.png)
 # PyAIDE - Python A.I. Development Environment
-Version 0.9.1
+[![Current Version](https://img.shields.io/badge/version-0.9.1-green.svg)]
 
-Last Updated: **July 15, 2016**
+Last Updated: **July 16, 2016**
 
 Lead Maintainer: [Rafael Zamora](https://github.com/rz4)
 
@@ -18,24 +18,24 @@ based on the input information provided by **Environments**. In
 addition, new **Environments** can be defined in order to test the
 decision behavior of **Agents**.
 
-**Agents** can be implemented by extending the `Agent` class.
+**Agents** can be implemented by importing and extending the `Agent` class.
 **Agents** will be provided with the following information:
 - A list of legal *Actions* for the **Environment**.
-- A list of *Goals* for the **Environment**.
+- A list of *Tasks* for the **Environment**.
 - *Percepts* passed from the **Environment** each update cycle.
 
 Using this input information, the **Agents** should decide what
 *Action* from the list of legal *Actions* to take.
 
-**Environments** can be implemented by extending the `Enviro`
+**Environments** can be implemented by importing and extending the `Enviro`
 class. **Environments** will have the following functions in relation
 to **Agents**:
 - Pass current information of the environment to the **Agents** each
-update cycle.
-- Update environment according to *Actions* passed from **Agents**.
+update cycle in the form of a *Percept* tuple.
+- Update environment according to *Action* passed from **Agents**.
 
 These functions will need to be defined in addition to defining a list
-of legal *Actions* and a list of *Goals*.
+of legal *Actions* and a list of *Tasks*.
 
 **AIDE**'s goal is to create a simple framework for defining **Agent**
 and **Environment** behavior and relations.
@@ -44,8 +44,9 @@ and **Environment** behavior and relations.
 ### Agents
 The following is code used to define a **Random Agent**:
 
+*RandomAgent.py*
 ```python
-from PyAide import Agent
+from PyAIDE import Agent
 from random import seed, choice
 
 class RandomAgent(Agent):
@@ -68,13 +69,15 @@ environment updates using the agent's`nextAct`.
 In this code example, the **Random Agent** selects a random
 action from `legalActs`. The environment will continue to
 update the agent as long as the agent is active.
-The `flag` is used to check the goals against
-the percepts, setting it inactive if any have been met.
-If any goal is met, the agent will be set inactive.
+The `flag` is used to check the tasks against
+the percepts. If any goal is met, the agent will be set inactive.
 ### Environments
 The following code is used to define a **Board Environment**:
 
+*BoardEnviro.py*
 ```python
+from PyAIDE import Enviro
+
 class BoardEnviro(Enviro):
 
     def initEnviro(self):
@@ -163,6 +166,8 @@ class BoardEnviro(Enviro):
 The following code is used to define a **Test Simulation** for
 a **Random Agent** interfaced with a **Board
 Environment**:
+
+*example.py*
 ```python
 from PyAide import BoardEnviro
 from PyAide import RandomAgent
@@ -180,6 +185,21 @@ the output filename for the result data, the number of times the environment
 will be simulated as the parameters, and whether to print state to console as
 parameters.
 
+## Features
+
+### Current: ver. 0.9.1
+- Create custom Environments.
+- Create custom Agents.
+- Three Environments implemented: BoardEnviro, MazeEnviro, EightPuzzle
+- Random Agent implemented.
+- AIDE GUI simulation playback.
+
+### Future:
+- Simulation result analysis tools.
+- Custom batch simulation runner.
+- Foreign Agent/Environment interfaces.
+- Shell for testing.
+
 ## Motivation
 
 This project is designed with the intention of rapid prototyping
@@ -188,14 +208,23 @@ used to facilitate Artificial General Intelligence research by
 creating a simple framework for agents to be tested in multiple
 unique and unknown environments.
 
-## Installation
+## Installation and Dependencies
 
-**PyAIDE**'s gui playback feature requires **PyGame** to run.
+### Dependencies:
+
+For running **PyAIDE**'s gui playback feature, **Pygame** >= 1.9.2 is required.
+
+### Installation:
 
 The following ***Pip*** command can be used to install **PyAIDE**:
 ```
 pip install git+https://github.com/rz4/PyAIDE
 ```
+
+## TO-DO
+
+- Documentation and Comments
+- Clean up Code
 
 ## License
 

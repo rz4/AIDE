@@ -1,13 +1,18 @@
 #!/usr/bin/python3
 """
-Project: AIDE
+Project: PyAIDE
 File: Agent.py
 Author: Rafael Zamora
-Version: 0.01
-Date Updated: 3/10/2016
+Version: 1.0.0
+Date Updated: 7/16/2016
+
+Change Log:
 """
 from abc import ABCMeta, abstractmethod
 
+'''
+
+'''
 class Agent:
     __metaclass__ = ABCMeta
 

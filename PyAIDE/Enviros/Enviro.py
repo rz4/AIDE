@@ -1,9 +1,9 @@
 #!/usr/bin/python3
 """
-Project: AIDE
+Project: PyAIDE
 File: Enviro.py
 Author: Rafael Zamora
-Version: 1.55
+Version: 1.0.0
 Date Updated: 6/18/2016
 
 Change Log:
@@ -16,15 +16,7 @@ from abc import ABCMeta, abstractmethod
 from copy import deepcopy
 
 '''
-$Design Concepts$
-Properties of Enviros:
--Discrete/Continuous
--Observable/Partially Observable
--Static/Dynamic
--Single agent/Multiple agent *
--Accessible/Inaccessible
--Deterministic/Non-deterministic
--Episodic/Non-episodic
+
 '''
 class Enviro:
     __metaclass__ = ABCMeta

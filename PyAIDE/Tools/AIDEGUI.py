@@ -1,9 +1,9 @@
 #!/usr/bin/python3
 """
-Project: AIDE
+Project: PyAIDE
 File: AIDEGUI.py
 Author: Rafael Zamora
-Version: 0.01
+Version: 1.0.0
 Date Updated: 6/18/2016
 
 Change Log:
@@ -11,6 +11,12 @@ Change Log:
 """
 import pygame
 
+'''
+AIDEGUI is PyAIDE tool used to replay a simulations data file.
+It uses Pygame to render the data file. There are controls to
+play, pause, and reset the replay.
+
+'''
 class AIDEGUI:
 
     def __init__(self):
@@ -26,7 +32,7 @@ class AIDEGUI:
         for enviro_str in enviro_file:
             varss = enviro_str.strip().split(" / ")
             self.data.append(varss)
-        module = __import__("PyAide.Enviros.CustomEnviros")
+        module = __import__("PyAIDE.Enviros.CustomEnviros")
         class_ = getattr(module, self.data[0][1])
         self.enviro = class_()
 
