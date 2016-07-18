@@ -30,6 +30,7 @@ class MazeEnviro(Enviro):
     def __init__(self):
         super().__init__()
         self.initPos = (0,0)
+        self.finalPos = None
 
     def initEnviro(self):
         self.legalActs = ["LEFT", "RIGHT", "UP", "DOWN"]
