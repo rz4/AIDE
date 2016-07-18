@@ -80,7 +80,7 @@ class MazeEnviro(Enviro):
         canvas.create_rectangle(x1, y1, x1 + (9/10)*tsize, y1 + (9/10)*tsize, fill = "green")
         for a in state["AgentsPos"]:
             agentPos = state["AgentsPos"][a]
-            x1, y1 = tsize/10 + (agentPos[1]*tsize) , tsize/10 +(agentPos[0]*tsize)
+            y1, x1 = tsize/10 + (agentPos[1]*tsize) , tsize/10 +(agentPos[0]*tsize)
             canvas.create_rectangle(x1, y1, x1 + (9/10)*tsize, y1 + (9/10)*tsize, fill = "red")
             canvas_id = canvas.create_text(x1 + (1/10)*tsize, y1 + (3/10)*tsize, anchor="nw")
             canvas.itemconfig(canvas_id, text=a)
