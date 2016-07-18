@@ -7,7 +7,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="PyAIDE",
-    version="0.9.1",
+    version="1.0.0",
     description="Python library for the development and testing of intelligent agents.",
     license="GNU",
     keywords="Artificial Intelligence Testing Development",
