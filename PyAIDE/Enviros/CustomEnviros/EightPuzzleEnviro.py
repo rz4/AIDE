@@ -1,24 +1,24 @@
 #!/usr/bin/python3
-"""
+'''
 Project: PyAIDE
 File: EightPuzzleEnviro.py
 Author: Rafael Zamora
 Version: 1.0.0
-Date Updated: 6/20/2016
+Last Update: 7/17/2016
 
 Change Log:
-"""
+'''
+
 from PyAIDE import Enviro
 from random import shuffle
 
-'''
-EightPuzzleEnviro is an environment made for one agent.
-The only agent task is to rearrange the puzzle to the solution order.
-The agent is to do this using the push-up, push-down, push-left, and push-right actions.
-
-'''
 class EightPuzzleEnviro(Enviro):
+    """
+    EightPuzzleEnviro is an environment made for one agent.
+    The only agent task is to rearrange the puzzle to the solution order.
+    The agent is to do this using the push-up, push-down, push-left, and push-right actions.
 
+    """
     def initEnviro(self):
         self.legalActs = ["PUSHLEFT", "PUSHRIGHT", "PUSHUP", "PUSHDOWN"]
         self.state["Player"] = self.agents[0].__class__.__name__
@@ -34,7 +34,6 @@ class EightPuzzleEnviro(Enviro):
     def act_to_Enviro(self, agent):
         if self.state["Player"] != agent.__class__.__name__: return
         act = agent.act()
-        print(act)
         puzzle = self.state["Puzzle"]
         i = puzzle.index(0)
         temp = i
@@ -53,36 +52,12 @@ class EightPuzzleEnviro(Enviro):
         puzzle[temp] = puzzle[i]
         puzzle[i] = 0
 
-    def render(self, gui, state):
-        tsize = (gui.screen.get_height() / 3)
+    def render(self, canvas, state):
+        tsize = (canvas.winfo_width() / 3)
         for i in range(9):
             if state["Puzzle"][i] != 0:
-                rect = gui.pygame.Rect((tsize/15) + (int(i%3)*tsize) , (tsize/15) + (int(i/3)*tsize), (9/10)*tsize, (9/10)*tsize)
-                gui.pygame.draw.rect(gui.screen, (0, 200, 255), rect)
-                gui.drawString(str(state["Puzzle"][i]),rect.centerx,rect.centery,centered = True)
-        gui.drawString("Player: " + str(state["Player"]),602,194)
-        gui.drawString("Puzzle: " + str(state["Puzzle"]),602,212)
-        gui.drawString("Solution: " + str(state["Solution"]),602,230)
-
-    def writeState(self, state):
-        str_ = "Player > " + str(state["Player"]) + " | "
-        str_ += "Puzzle > "
-        for p in state["Puzzle"]:
-            str_ += str(p) + " , "
-        str_ = str_[0:-3] + " | Solution > "
-        for s in state["Solution"]:
-            str_ += str(s) + " , "
-        return str_[0:-3]
-
-    def readState(self, str_):
-        state = {}
-        data = str_.split(" | ")
-        var = data[0].split(" > ")
-        state[var[0]] = var[1]
-        var = data[1].split(" > ")
-        varr = var[1].split(" , ")
-        state[var[0]] = [int(v) for v in varr]
-        var = data[2].split(" > ")
-        varr = var[1].split(" , ")
-        state[var[0]] = tuple(int(v) for v in varr)
-        return state
+                x1, y1 = (tsize/15) + (int(i%3)*tsize), (tsize/15) + (int(i/3)*tsize)
+                canvas.create_rectangle(x1, y1, x1 + (9/10)*tsize, y1 + (9/10)*tsize, fill = "blue")
+                canvas_id = canvas.create_text(x1 + (1/10)*tsize, y1 + (3/10)*tsize, anchor="nw")
+                canvas.itemconfig(canvas_id, text=str(state["Puzzle"][i]))
+                canvas.insert(canvas_id, 12, "")

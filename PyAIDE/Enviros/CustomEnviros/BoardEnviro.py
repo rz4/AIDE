@@ -1,32 +1,42 @@
 #!/usr/bin/python3
-"""
-Project: AIDE
+'''
+Project: PyAIDE
 File: BoardEnviro.py
 Author: Rafael Zamora
 Version: 1.0.0
-Date Updated: 3/24/2016
+Last Update: 7/17/2016
 
 Change Log:
--ADDED Interface with AIDEGUI
-"""
+-ADDED set parameter functions v1.0.0
+'''
+
 from PyAIDE import Enviro
 
-'''
-BoardEnviro is an environment made for one agent.
-The only agent task is to reach the FinalPos.
-The agent is to do this using the up, down, left, and right actions.
-
-Note: The current default task is hardcoded at (width-1, height-1) coordinates.
-      This can be changes by changing self.state["FinalPos"].
-'''
 class BoardEnviro(Enviro):
+    """ BoardEnviro is an environment made for multiple agents.
+    The only agent task is to reach the FinalPos.
+    The agent is to do this using the up, down, left, and right actions.
+
+    The following functions can be used to set parameters of the environment:
+    * setBoardSize(length, width) - sets dimensions of board
+    * setInitialPos(x, y) - sets initial position of agents
+    * setFinalPos(x, y) - sets final position of agents
+
+    """
+
+    def __init__(self):
+        super().__init__()
+        self.width = 25
+        self.length = 25
+        self.initPos = (0,0)
+        self.finalPos = (self.width-1, self.length-1)
 
     def initEnviro(self):
         self.legalActs = ["LEFT", "RIGHT", "UP", "DOWN"]
-        self.state["Width"] = 25
-        self.state["Height"] = 25
-        self.state["InitPos"] = (0,0)
-        self.state["FinalPos"] = (24,24)
+        self.state["Width"] = self.width
+        self.state["Height"] = self.length
+        self.state["InitPos"] = self.initPos
+        self.state["FinalPos"] = self.finalPos
         self.state["AgentsPos"] = {}
         for a in self.agents: self.state["AgentsPos"][a.__class__.__name__] = list(self.state["InitPos"])
         self.tasks.append(self.state["FinalPos"])
@@ -51,53 +61,28 @@ class BoardEnviro(Enviro):
             if agentPos[1] < self.state["Height"]-1:
                 agentPos[1] += 1
 
-    def render(self, gui, state):
-        tsize = (gui.screen.get_height() / state["Width"]) - 0.02
+    def render(self, canvas, state):
+        tsize = (canvas.winfo_width() / state["Width"]) - 0.02
         for x in range(state["Width"]):
             for y in range(state["Height"]):
-                rect = gui.pygame.Rect(tsize/10 + (x*tsize) , tsize/10 +(y*tsize), (9/10)*tsize, (9/10)*tsize)
-                gui.pygame.draw.rect(gui.screen, (0, 200, 255), rect)
-        rect = gui.pygame.Rect(tsize/10 + (state["FinalPos"][0]*tsize) , tsize/10 +(state["FinalPos"][1]*tsize), (9/10)*tsize, (9/10)*tsize)
-        gui.pygame.draw.rect(gui.screen, (255, 0, 0), rect)
-        gui.drawString("Initial Position: " + str(state["InitPos"]),602,194)
-        gui.drawString("Final Position: " + str(state["FinalPos"]),602,212)
-        gui.drawString("Agent Positions:",602,230)
-        i = 0
+                x1, y1 = tsize/10 + (x*tsize), tsize/10 + (y*tsize)
+                canvas.create_rectangle(x1, y1, x1 + (9/10)*tsize, y1 + (9/10)*tsize, fill = "blue")
+        x1, y1 = tsize/10 + (state["FinalPos"][0]*tsize) , tsize/10 +(state["FinalPos"][1]*tsize)
+        canvas.create_rectangle(x1, y1, x1 + (9/10)*tsize, y1 + (9/10)*tsize, fill = "green")
         for a in state["AgentsPos"]:
             agentPos = state["AgentsPos"][a]
-            rect = gui.pygame.Rect(tsize/10 + (agentPos[1]*tsize) , tsize/10 +(agentPos[0]*tsize), (9/10)*tsize, (9/10)*tsize)
-            gui.pygame.draw.rect(gui.screen, (0, 0, 255), rect)
-            gui.drawString(a,rect.centerx,rect.centery,centered = True)
-            gui.drawString(a + " at " + str(state["AgentsPos"][a]),612,248 + 18*i)
-            i += 1
+            x1, y1 = tsize/10 + (agentPos[1]*tsize) , tsize/10 +(agentPos[0]*tsize)
+            canvas.create_rectangle(x1, y1, x1 + (9/10)*tsize, y1 + (9/10)*tsize, fill = "red")
+            canvas_id = canvas.create_text(x1 + (1/10)*tsize, y1 + (3/10)*tsize, anchor="nw")
+            canvas.itemconfig(canvas_id, text=a)
+            canvas.insert(canvas_id, 12, "")
 
-    def writeState(self, state):
-        str_ = "Width > " + str(state["Width"]) + " | "
-        str_ += "Height > " + str(state["Height"]) + " | "
-        str_ += "InitPos > " + str(state["InitPos"][0]) + " , " + str(state["InitPos"][1]) + " | "
-        str_ += "FinalPos > " + str(state["FinalPos"][0]) + " , " + str(state["FinalPos"][1]) + " | "
-        str_ += "AgentsPos > "
-        for a in state["AgentsPos"]:
-            str_ += a + " < " + str(state["AgentsPos"][a][0]) + " , " + str(state["AgentsPos"][a][1]) + " < "
-        return str_[0:-3]
+    def setBoardDimen(self, length, width):
+        self.length = length
+        self.width = width
 
-    def readState(self, str_):
-        state = {}
-        data = str_.split(" | ")
-        var = data[0].split(" > ")
-        state[var[0]] = int(var[1])
-        var = data[1].split(" > ")
-        state[var[0]] = int(var[1])
-        var = data[2].split(" > ")
-        varr = var[1].split(" , ")
-        state[var[0]] = (int(varr[0]),int(varr[1]))
-        var = data[3].split(" > ")
-        varr = var[1].split(" , ")
-        state[var[0]] = (int(varr[0]),int(varr[1]))
-        var = data[4].split(" > ")
-        state[var[0]] = {}
-        varr = var[1].split(" < ")
-        for i in range(int(len(varr)/2)):
-            varrr = varr[i*2+1].split(" , ")
-            state[var[0]][varr[i*2]] = [int(varrr[0]),int(varrr[1])]
-        return state
+    def setInitialPos(self, x, y):
+        self.initPos = (x,y)
+
+    def setFinalPos(self, x, y):
+        self.finalPos = (x,y)

@@ -1,5 +1,5 @@
-from PyAide import BoardEnviro
-from PyAide import RandomAgent
+from PyAIDE import BoardEnviro
+from PyAIDE import RandomAgent
 
 agent = RandomAgent()
 

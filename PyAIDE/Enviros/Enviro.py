@@ -1,24 +1,40 @@
 #!/usr/bin/python3
-"""
+'''
 Project: PyAIDE
 File: Enviro.py
 Author: Rafael Zamora
 Version: 1.0.0
-Date Updated: 6/18/2016
+Date Updated: 7/17/2016
 
 Change Log:
--FIXED Save State Bug
--ADDED EnviroData Class imbedded to Enviro
--ADDED Logging Capabilities for GUI Replay
-"""
+'''
 
 from abc import ABCMeta, abstractmethod
 from copy import deepcopy
+from json import dumps
 
-'''
-
-'''
 class Enviro:
+    """Enviro class is an abstract class used to define environments.
+
+    The PyAIDE agent-enviro update cycle consists of the following
+    functions in order:
+    * Enviro's percept_to_Agent() function - Builds percept tuple
+    * Agent's sense() function - Passes percept tuple to agent
+    * Agent's compute() function - Agent behavior
+    * Agent's act() function - Passes action to enviro
+    * Enviros's act_to_Enviro() function - Updates enviro with action
+
+    The following three functions must be defined in child class:
+    * initEnviro() - function should initialize state variables and enviro variables
+                     legalActs and tasks should be defined in this function.
+    * percept_to_Agent() - function should build percept tuple that will be passed to agents.
+    * act_to_Enviro() - function should update environment depending on action from agents.
+
+    The render() funtion defines what will be rendered on PyAIDEGUI's tkinter canvas.
+    This function can be overriden to display a custom graphical representation
+    of the environment.
+
+    """
     __metaclass__ = ABCMeta
 
     def __init__(self):
@@ -30,8 +46,7 @@ class Enviro:
         self.agentsActCount = {}
 
     def __str__(self):
-        str_ = "State\n" + self.writeState(self.state)
-        str_= str_.replace(" | ", "\n").replace(" > ", ": ") + "\n"
+        str_ = "State: \n" + dumps(self.state)[2:-2].replace(", \"", "\n") + "\n"
         return str_
 
     @abstractmethod
@@ -46,23 +61,14 @@ class Enviro:
     def act_to_Enviro(self, agent):
         pass
 
-    @abstractmethod
-    def render(self, gui, state):
-        pass
-
-    @abstractmethod
-    def writeState(self, state):
-        pass
-
-    @abstractmethod
-    def readState(self, str_):
-        pass
+    def render(self, canvas, state):
+        return
 
     def runEnviro(self, filename = None, updates = None, verbose = False):
         self.initEnviro()
-        if verbose: print("Running: \n" + self.__getEnviroVars())
+        if verbose: print("Running: " + self.__class__.__name__)
         self.__initAgents()
-        for a in self.agents: self.agentsActCount[a] = 0
+        for a in self.agents: self.agentsActCount[a.__class__.__name__] = 0
         i = 0
         while(self.__agentsActive()):
             self.states.append(deepcopy(self.state))
@@ -70,9 +76,9 @@ class Enviro:
             if verbose: print(str(i) + ' ' + str(self))
             i += 1
             if updates != None and i > updates: break;
-        if verbose: print("Done: \n" + self.__getEnviroVars())
+        if verbose: print("Done: " + self.__class__.__name__)
         if filename != None:
-            self.__writeEnviro(filename)
+            self.__writeData(filename)
 
     def addAgent(self, agent):
         self.agents.append(agent)
@@ -89,7 +95,7 @@ class Enviro:
                 self.percept_to_Agent(a)
                 a.compute()
                 self.act_to_Enviro(a)
-                self.agentsActCount[a] += 1
+                self.agentsActCount[a.__class__.__name__] += 1
 
     def __agentsActive(self):
         flag = False
@@ -97,26 +103,18 @@ class Enviro:
             if a.active: flag = True
         return flag
 
-    def __getEnviroVars(self):
-        stats = "Enviro: / " + self.__class__.__name__ + "\n"
-        str_ = "Agents: / "
-        for a in self.agents: str_ += a.__class__.__name__ + " / "
-        stats += str_[0:-3]+"\n"
-        str_ = "Legal_Acts: / "
-        for a in self.legalActs: str_ += str(a) + " / "
-        stats += str_[0:-3]+"\n"
-        str_ = "Tasks: / "
-        for t in self.tasks: str_ += str(t) + " / "
-        stats += str_[0:-3]+"\n"
-        str_ = "Action_Counts: / "
-        for a in self.agentsActCount:
-            str_ += "( " + a.__class__.__name__
-            str_ += " , " + str(self.agentsActCount[a]) + " ) / "
-        stats += str_[0:-3] + "\n"
-        return stats
-
-    def __writeEnviro(self, filename):
+    def __writeData(self, filename):
         enviro_file = open(filename, "w")
-        enviro_file.write(self.__getEnviroVars()+"\n")
-        for s in self.states:
-            enviro_file.write("State: / " + str(self.writeState(s)) + "\n")
+        enviroVars = {}
+        enviroVars["Enviro"] = self.__class__.__name__
+        enviroVars["Agents"] = [a.__class__.__name__ for a in self.agents]
+        enviroVars["Legal_Acts"] = self.legalActs
+        enviroVars["Tasks"] = self.tasks
+        enviroVars["Action_Counts"] = self.agentsActCount
+        data = enviroVars
+        data_json = dumps(data)
+        enviro_file.write(data_json + "\n")
+        for state in self.states:
+            data = state
+            data_json = dumps(data)
+            enviro_file.write(data_json + "\n")
