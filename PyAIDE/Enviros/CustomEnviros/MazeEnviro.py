@@ -30,7 +30,6 @@ class MazeEnviro(Enviro):
     def __init__(self):
         super().__init__()
         self.initPos = (0,0)
-        self.finalPos = (self.width-1, self.length-1)
 
     def initEnviro(self):
         self.legalActs = ["LEFT", "RIGHT", "UP", "DOWN"]
@@ -38,7 +37,8 @@ class MazeEnviro(Enviro):
         self.state["Width"] = len(self.state["Maze"])
         self.state["Height"] = len(self.state["Maze"][0])
         self.state["InitPos"] = self.initPos
-        self.state["FinalPos"] = self.finalPos
+        if self.finalPos: self.state["FinalPos"] = self.finalPos
+        else: self.state["FinalPos"] = (self.state["Width"]-1, self.state["Height"]-1)
         self.state["AgentsPos"] = {}
         for a in self.agents: self.state["AgentsPos"][a.__class__.__name__] = list(self.state["InitPos"])
         self.tasks.append(self.state["FinalPos"])
