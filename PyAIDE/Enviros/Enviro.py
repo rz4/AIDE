@@ -18,17 +18,17 @@ class Enviro:
 
     The PyAIDE agent-enviro update cycle consists of the following
     functions in order:
-    * Enviro's percept_to_Agent() function - Builds percept tuple
+    * Enviro's percept_to_agent() function - Builds percept tuple
     * Agent's sense() function - Passes percept tuple to agent
     * Agent's compute() function - Agent behavior
     * Agent's act() function - Passes action to enviro
-    * Enviros's act_to_Enviro() function - Updates enviro with action
+    * Enviros's act_to_enviro() function - Updates enviro with action
 
     The following three functions must be defined in child class:
-    * initEnviro() - function should initialize state variables and enviro variables
+    * init_enviro() - function should initialize state variables and enviro variables
                      legalActs and tasks should be defined in this function.
     * percept_to_Agent() - function should build percept tuple that will be passed to agents.
-    * act_to_Enviro() - function should update environment depending on action from agents.
+    * act_to_enviro() - function should update environment depending on action from agents.
 
     The render() funtion defines what will be rendered on PyAIDEGUI's tkinter canvas.
     This function can be overriden to display a custom graphical representation
@@ -69,7 +69,6 @@ class Enviro:
     def run_enviro(self, filename = None, updates = None, verbose = False):
         if verbose: print("Running: " + self.__class__.__name__)
         self.init_enviro()
-        print(self.enviro_data)
         self.__init_agents()
         i = 0
         while(self.__agents_active()):

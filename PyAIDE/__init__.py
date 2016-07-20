@@ -3,5 +3,7 @@ from PyAIDE.Agents.Agent import Agent
 from PyAIDE.Enviros.CustomEnviros.BoardEnviro import BoardEnviro
 from PyAIDE.Enviros.CustomEnviros.MazeEnviro import MazeEnviro
 from PyAIDE.Enviros.CustomEnviros.EightPuzzleEnviro import EightPuzzleEnviro
+from PyAIDE.Enviros.CustomEnviros.TicTacToeEnviro import TicTacToeEnviro
 from PyAIDE.Agents.CustomAgents.RandomAgent import RandomAgent
+from PyAIDE.Agents.CustomAgents.HumanAgent import HumanAgent
 from PyAIDE.Tools.PyAIDEGUI import PyAIDEGUI

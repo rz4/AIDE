@@ -97,6 +97,8 @@ class PyAIDEGUI:
 
     def __decr_iter(self):
         if self.iter > 0: self.iter -= 1
+        else: self.__pause_iter()
 
     def __reset_iter(self):
         self.iter = 0
+        if not self.pause: self.__pause_iter()

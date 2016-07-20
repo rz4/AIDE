@@ -12,7 +12,7 @@ from PyAIDE import Agent
 from random import seed, choice
 
 class RandomAgent(Agent):
-    """ RandomAgent is a agent which selects a random actions
+    """ RandomAgent is an agent which selects a random actions
     from list of legal actions. The agent will become inactive
     once any task is met.
 

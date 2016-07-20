@@ -13,8 +13,7 @@ from PyAIDE import Enviro
 from random import shuffle
 
 class EightPuzzleEnviro(Enviro):
-    """
-    EightPuzzleEnviro is an environment made for one agent.
+    """ EightPuzzleEnviro is an environment made for one agent.
     The only agent task is to rearrange the puzzle to the solution order.
     The agent is to do this using the push-up, push-down, push-left, and push-right actions.
 
