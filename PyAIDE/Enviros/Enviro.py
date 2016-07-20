@@ -70,7 +70,7 @@ class Enviro:
         if verbose: print("Running: " + self.__class__.__name__)
         self.init_enviro()
         print(self.enviro_data)
-        self.init_agents()
+        self.__init_agents()
         i = 0
         while(self.__agents_active()):
             self.state_datas.append(deepcopy(self.state_data))
