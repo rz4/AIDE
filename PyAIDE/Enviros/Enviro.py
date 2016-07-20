@@ -68,9 +68,9 @@ class Enviro:
 
     def run_enviro(self, filename = None, updates = None, verbose = False):
         if verbose: print("Running: " + self.__class__.__name__)
-        self.__init_enviro()
+        self.init_enviro()
         print(self.enviro_data)
-        self.__init_agents()
+        self.init_agents()
         i = 0
         while(self.__agents_active()):
             self.state_datas.append(deepcopy(self.state_data))
@@ -94,9 +94,9 @@ class Enviro:
     def __update_agents(self, count):
         for a in self.enviro_data["Agents"]:
             if a.active:
-                self.__percept_to_agent(a)
+                self.percept_to_agent(a)
                 a.compute()
-                self.__act_to_enviro(a)
+                self.act_to_enviro(a)
                 self.enviro_data["Agents_Act_Count"][a.__class__.__name__] += 1
 
     def __agents_active(self):
