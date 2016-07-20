@@ -5,4 +5,4 @@ agent = RandomAgent()
 
 enviro = BoardEnviro()
 enviro.add_agent(agent)
-enviro.runEnviro(filename = "data.txt",updates = 5000, verbose = True)
+enviro.run_enviro(filename = "data.txt",updates = 5000, verbose = True)
