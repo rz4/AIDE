@@ -74,8 +74,9 @@ class Enviro:
         while(self.__agents_active()):
             self.state_datas.append(deepcopy(self.state_data))
             self.__update_agents(i)
-            if verbose: print(str(i+=1) + ' ' + str(self))
+            if verbose: print(str(i) + ' ' + str(self))
             if updates != None and i > updates: break;
+            i += 1
         if filename != None: self.__write_data(filename)
         if verbose: print("Done: " + self.__class__.__name__)
 
