@@ -20,7 +20,7 @@ class EightPuzzleEnviro(Enviro):
 
     """
 
-    def __init_enviro(self):
+    def init_enviro(self):
         self.enviro_data["Legal_Acts"] = ["LEFT", "RIGHT", "UP", "DOWN"]
         self.state_data["Player"] = self.enviro_data["Agents"][0].__class__.__name__
         self.state_data["Puzzle"] = [i for i in range(9)]
@@ -28,7 +28,7 @@ class EightPuzzleEnviro(Enviro):
         self.state_data["Solution"] = (0,1,2,3,4,5,6,7,8)
         self.enviro_data["Tasks"].append(self.state_data["Solution"])
 
-    def __percept_to_agent(self, agent):
+    def percept_to_agent(self, agent):
         percept = tuple(self.state_data["Puzzle"])
         agent.sense(percept)
 

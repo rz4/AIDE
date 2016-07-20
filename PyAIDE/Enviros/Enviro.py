@@ -52,15 +52,15 @@ class Enviro:
         return str_
 
     @abstractmethod
-    def __init_enviro(self):
+    def init_enviro(self):
         pass
 
     @abstractmethod
-    def __percept_to_agent(self, agent):
+    def percept_to_agent(self, agent):
         pass
 
     @abstractmethod
-    def __act_to_enviro(self, agent):
+    def act_to_enviro(self, agent):
         pass
 
     def render(self, canvas, state):
@@ -69,6 +69,7 @@ class Enviro:
     def run_enviro(self, filename = None, updates = None, verbose = False):
         if verbose: print("Running: " + self.__class__.__name__)
         self.__init_enviro()
+        print(self.enviro_data)
         self.__init_agents()
         i = 0
         while(self.__agents_active()):

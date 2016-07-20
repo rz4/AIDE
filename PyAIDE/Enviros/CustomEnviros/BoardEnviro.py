@@ -31,7 +31,7 @@ class BoardEnviro(Enviro):
         self.init_pos = (0,0)
         self.final_pos = (self.width-1, self.length-1)
 
-    def __init_enviro(self):
+    def init_enviro(self):
         self.enviro_data["Legal_Acts"] = ["LEFT", "RIGHT", "UP", "DOWN"]
         self.state_data["Width"] = self.width
         self.state_data["Height"] = self.length
@@ -42,11 +42,11 @@ class BoardEnviro(Enviro):
             self.state_data["AgentsPos"][a.__class__.__name__] = list(self.state_data["InitPos"])
         self.enviro_data["Tasks"].append(self.state_data["FinalPos"])
 
-    def __percept_to_agent(self, agent):
+    def percept_to_agent(self, agent):
         percept = tuple(self.state_data["AgentsPos"][agent.__class__.__name__])
         agent.sense(percept)
 
-    def __act_to_enviro(self, agent):
+    def act_to_enviro(self, agent):
         act = agent.act()
         agent_pos = self.state_data["AgentsPos"][agent.__class__.__name__]
         legal_acts = self.enviro_data["Legal_Acts"]
