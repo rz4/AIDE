@@ -54,7 +54,7 @@ class EightPuzzleEnviro(Enviro):
         puzzle[temp] = puzzle[i]
         puzzle[i] = 0
 
-    def render(self, canvas, state):
+    def render(self, canvas, state_data):
         #Render Eight Puzzle Tiles
         tsize = (canvas.winfo_width() / 3)
         for i in range(9):
@@ -62,5 +62,5 @@ class EightPuzzleEnviro(Enviro):
                 x1, y1 = (tsize/15) + (int(i%3)*tsize), (tsize/15) + (int(i/3)*tsize)
                 canvas.create_rectangle(x1, y1, x1 + (9/10)*tsize, y1 + (9/10)*tsize, fill = "blue")
                 canvas_id = canvas.create_text(x1 + (1/10)*tsize, y1 + (3/10)*tsize, anchor="nw")
-                canvas.itemconfig(canvas_id, text=str(state["Puzzle"][i]))
+                canvas.itemconfig(canvas_id, text=str(state_data["Puzzle"][i]))
                 canvas.insert(canvas_id, 12, "")

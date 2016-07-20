@@ -70,10 +70,10 @@ class MazeEnviro(Enviro):
             agent_pos[0] = old_pos[0]
             agent_pos[1] = old_pos[1]
 
-    def render(self, canvas, state):
+    def render(self, canvas, state_data):
         #Render Maze Tiles
         maze = state_data["Maze"]
-        tsize = (canvas.winfo_width() / state["Width"]) - 0.02
+        tsize = (canvas.winfo_width() / state_data["Width"]) - 0.02
         for x in range(len(maze)):
             for y in range(len(maze[x])):
                 if maze[x][y] == 0:
@@ -81,7 +81,7 @@ class MazeEnviro(Enviro):
                     canvas.create_rectangle(x1, y1, x1 + (9/10)*tsize, y1 + (9/10)*tsize, fill = "blue")
 
         #Render Final Position Tile
-        x1, y1 = tsize/10 + (state["FinalPos"][0]*tsize) , tsize/10 +(state["FinalPos"][1]*tsize)
+        x1, y1 = tsize/10 + (state_data["FinalPos"][0]*tsize) , tsize/10 +(state_data["FinalPos"][1]*tsize)
         canvas.create_rectangle(x1, y1, x1 + (9/10)*tsize, y1 + (9/10)*tsize, fill = "green")
 
         #Render Agent Position Tile

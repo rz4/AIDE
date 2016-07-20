@@ -63,7 +63,7 @@ class Enviro:
     def act_to_enviro(self, agent):
         pass
 
-    def render(self, canvas, state):
+    def render(self, canvas, state_data):
         return
 
     def run_enviro(self, filename = None, updates = None, verbose = False):

@@ -63,16 +63,16 @@ class BoardEnviro(Enviro):
             if agent_pos[1] < self.state_data["Height"]-1:
                 agent_pos[1] += 1
 
-    def render(self, canvas, state):
+    def render(self, canvas, state_data):
         #Render Board Tiles
-        tsize = (canvas.winfo_width() / state["Width"]) - 0.02
-        for x in range(state["Width"]):
-            for y in range(state["Height"]):
+        tsize = (canvas.winfo_width() / state_data["Width"]) - 0.02
+        for x in range(state_data["Width"]):
+            for y in range(state_data["Height"]):
                 x1, y1 = tsize/10 + (x*tsize), tsize/10 + (y*tsize)
                 canvas.create_rectangle(x1, y1, x1 + (9/10)*tsize, y1 + (9/10)*tsize, fill = "blue")
 
         #Render Final Position Tile
-        x1, y1 = tsize/10 + (state["FinalPos"][0]*tsize) , tsize/10 +(state["FinalPos"][1]*tsize)
+        x1, y1 = tsize/10 + (state_data["FinalPos"][0]*tsize) , tsize/10 +(state_data["FinalPos"][1]*tsize)
         canvas.create_rectangle(x1, y1, x1 + (9/10)*tsize, y1 + (9/10)*tsize, fill = "green")
 
         #Render Agent Position Tile
