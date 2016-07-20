@@ -2,7 +2,7 @@
 # PyAIDE - Python A.I. Development Environment
 ![Current Version](https://img.shields.io/badge/version-1.0.0-green.svg)
 
-Last Updated: **July 18, 2016**
+Last Updated: **July 20, 2016**
 
 Lead Maintainer: [Rafael Zamora](https://github.com/rz4)
 
@@ -53,13 +53,13 @@ class RandomAgent(Agent):
 
     def compute(self):
         seed()
-        self.nextAct = choice(self.legalActs)
+        self.next_act = choice(self.legal_acts)
         flag = True
         for t in self.tasks:
-            if self.nextPercept != t: flag = False
+            if self.next_percept != t: flag = False
         if flag:
             self.active = False
-            self.nextAct = None
+            self.next_act = None
 ```
 All agent behavior should be defined in the `compute()` method.
 This method will be called during the simulation, after the
@@ -79,69 +79,86 @@ The following code is used to define a **Board Environment**:
 from PyAIDE import Enviro
 
 class BoardEnviro(Enviro):
+    """ BoardEnviro is an environment made for multiple agents.
+    The only agent task is to reach the FinalPos.
+    The agent is to do this using the up, down, left, and right actions.
+
+    The following functions can be used to set parameters of the environment:
+    * setBoardSize(length, width) - sets dimensions of board
+    * setInitialPos(x, y) - sets initial position of agents
+    * setFinalPos(x, y) - sets final position of agents
+
+    """
 
     def __init__(self):
         super().__init__()
         self.width = 25
         self.length = 25
-        self.initPos = (0,0)
-        self.finalPos = (self.width-1, self.length-1)
+        self.init_pos = (0,0)
+        self.final_pos = (self.width-1, self.length-1)
 
-    def initEnviro(self):
-        self.legalActs = ["LEFT", "RIGHT", "UP", "DOWN"]
-        self.state["Width"] = self.width
-        self.state["Height"] = self.length
-        self.state["InitPos"] = self.initPos
-        self.state["FinalPos"] = self.finalPos
-        self.state["AgentsPos"] = {}
-        for a in self.agents: self.state["AgentsPos"][a.__class__.__name__] = list(self.state["InitPos"])
-        self.tasks.append(self.state["FinalPos"])
+    def __init_enviro(self):
+        self.enviro_data["Legal_Acts"] = ["LEFT", "RIGHT", "UP", "DOWN"]
+        self.state_data["Width"] = self.width
+        self.state_data["Height"] = self.length
+        self.state_data["InitPos"] = self.init_pos
+        self.state_data["FinalPos"] = self.final_pos
+        self.state_data["AgentsPos"] = {}
+        for a in self.enviro_data["Agents"]:
+            self.state_data["AgentsPos"][a.__class__.__name__] = list(self.state_data["InitPos"])
+        self.enviro_data["Tasks"].append(self.state_data["FinalPos"])
 
-    def percept_to_Agent(self, agent):
-        percept = tuple(self.state["AgentsPos"][agent.__class__.__name__])
+    def __percept_to_agent(self, agent):
+        percept = tuple(self.state_data["AgentsPos"][agent.__class__.__name__])
         agent.sense(percept)
 
-    def act_to_Enviro(self, agent):
+    def __act_to_enviro(self, agent):
         act = agent.act()
-        agentPos = self.state["AgentsPos"][agent.__class__.__name__]
-        if act == self.legalActs[0]:#LEFT
-            if agentPos[0] > 0:
-                agentPos[0] -= 1
-        elif act == self.legalActs[1]:#RIGHT
-            if agentPos[0] < self.state["Width"]-1:
-                agentPos[0] += 1
-        elif act == self.legalActs[2]:#UP
-            if agentPos[1] > 0:
-                agentPos[1] -= 1
-        elif act == self.legalActs[3]:#DOWN
-            if agentPos[1] < self.state["Height"]-1:
-                agentPos[1] += 1
+        agent_pos = self.state_data["AgentsPos"][agent.__class__.__name__]
+        legal_acts = self.enviro_data["Legal_Acts"]
+        if act == legal_acts[0]:#LEFT
+            if agent_pos[0] > 0:
+                agent_pos[0] -= 1
+        elif act == legal_acts[1]:#RIGHT
+            if agent_pos[0] < self.state_data["Width"]-1:
+                agent_pos[0] += 1
+        elif act == legal_acts[2]:#UP
+            if agent_pos[1] > 0:
+                agent_pos[1] -= 1
+        elif act == legal_acts[3]:#DOWN
+            if agent_pos[1] < self.state_data["Height"]-1:
+                agent_pos[1] += 1
 
     def render(self, canvas, state):
+        #Render Board Tiles
         tsize = (canvas.winfo_width() / state["Width"]) - 0.02
         for x in range(state["Width"]):
             for y in range(state["Height"]):
                 x1, y1 = tsize/10 + (x*tsize), tsize/10 + (y*tsize)
                 canvas.create_rectangle(x1, y1, x1 + (9/10)*tsize, y1 + (9/10)*tsize, fill = "blue")
+
+        #Render Final Position Tile
         x1, y1 = tsize/10 + (state["FinalPos"][0]*tsize) , tsize/10 +(state["FinalPos"][1]*tsize)
         canvas.create_rectangle(x1, y1, x1 + (9/10)*tsize, y1 + (9/10)*tsize, fill = "green")
-        for a in state["AgentsPos"]:
-            agentPos = state["AgentsPos"][a]
-            x1, y1 = tsize/10 + (agentPos[1]*tsize) , tsize/10 +(agentPos[0]*tsize)
+
+        #Render Agent Position Tile
+        for a in state_data["AgentsPos"]:
+            agent_pos = state_data["AgentsPos"][a]
+            x1, y1 = tsize/10 + (agent_pos[1]*tsize) , tsize/10 +(agent_pos[0]*tsize)
             canvas.create_rectangle(x1, y1, x1 + (9/10)*tsize, y1 + (9/10)*tsize, fill = "red")
             canvas_id = canvas.create_text(x1 + (1/10)*tsize, y1 + (3/10)*tsize, anchor="nw")
             canvas.itemconfig(canvas_id, text=a)
             canvas.insert(canvas_id, 12, "")
 
-    def setBoardDimen(self, length, width):
+    def set_board_dimen(self, length, width):
         self.length = length
         self.width = width
 
-    def setInitialPos(self, x, y):
-        self.initPos = (x,y)
+    def set_initial_pos(self, x, y):
+        self.init_pos = (x,y)
 
-    def setFinalPos(self, x, y):
-        self.finalPos = (x,y)
+    def set_final_pos(self, x, y):
+        self.final_pos = (x,y)
 ```
 
 ### Running a Simulation

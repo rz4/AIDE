@@ -38,83 +38,76 @@ class Enviro:
     __metaclass__ = ABCMeta
 
     def __init__(self):
-        self.state = {}
-        self.states = []
-        self.legalActs = None
-        self.tasks = []
-        self.agents = []
-        self.agentsActCount = {}
+        self.state_data = {}
+        self.state_datas = []
+        self.enviro_data = {}
+        self.enviro_data["Enviro"] = self.__class__.__name__
+        self.enviro_data["Legal_Acts"] = None
+        self.enviro_data["Tasks"] = []
+        self.enviro_data["Agents"] = []
+        self.enviro_data["Agents_Act_Count"] = {}
 
     def __str__(self):
-        str_ = "State: \n" + dumps(self.state)[2:-2].replace(", \"", "\n") + "\n"
+        str_ = "State: \n" + dumps(self.state_data)[2:-2].replace(", \"", "\n") + "\n"
         return str_
 
     @abstractmethod
-    def initEnviro(self):
+    def __init_enviro(self):
         pass
 
     @abstractmethod
-    def percept_to_Agent(self, agent):
+    def __percept_to_agent(self, agent):
         pass
 
     @abstractmethod
-    def act_to_Enviro(self, agent):
+    def __act_to_enviro(self, agent):
         pass
 
     def render(self, canvas, state):
         return
 
-    def runEnviro(self, filename = None, updates = None, verbose = False):
-        self.initEnviro()
+    def run_enviro(self, filename = None, updates = None, verbose = False):
         if verbose: print("Running: " + self.__class__.__name__)
-        self.__initAgents()
-        for a in self.agents: self.agentsActCount[a.__class__.__name__] = 0
+        self.__init_enviro()
+        self.__init_agents()
         i = 0
-        while(self.__agentsActive()):
-            self.states.append(deepcopy(self.state))
-            self.__updateAgents(i)
-            if verbose: print(str(i) + ' ' + str(self))
-            i += 1
+        while(self.__agents_active()):
+            self.state_datas.append(deepcopy(self.state_data))
+            self.__update_agents(i)
+            if verbose: print(str(i+=1) + ' ' + str(self))
             if updates != None and i > updates: break;
+        if filename != None: self.__write_data(filename)
         if verbose: print("Done: " + self.__class__.__name__)
-        if filename != None:
-            self.__writeData(filename)
 
-    def addAgent(self, agent):
-        self.agents.append(agent)
+    def add_agent(self, agent):
+        self.enviro_data["Agents"].append(agent)
 
-    def __initAgents(self):
-        for a in self.agents:
-            a.setLegalActs(self.legalActs.copy())
-            a.setTasks(self.tasks.copy())
-            a.init_Agent()
+    def __init_agents(self):
+        for a in self.enviro_data["Agents"]:
+            a.set_legal_acts(self.enviro_data["Legal_Acts"].copy())
+            a.set_tasks(self.enviro_data["Tasks"].copy())
+            a.init_agent()
+            self.enviro_data["Agents_Act_Count"][a.__class__.__name__] = 0
 
-    def __updateAgents(self, count):
-        for a in self.agents:
+    def __update_agents(self, count):
+        for a in self.enviro_data["Agents"]:
             if a.active:
-                self.percept_to_Agent(a)
+                self.__percept_to_agent(a)
                 a.compute()
-                self.act_to_Enviro(a)
-                self.agentsActCount[a.__class__.__name__] += 1
+                self.__act_to_enviro(a)
+                self.enviro_data["Agents_Act_Count"][a.__class__.__name__] += 1
 
-    def __agentsActive(self):
+    def __agents_active(self):
         flag = False
-        for a in self.agents:
+        for a in self.enviro_data["Agents"]:
             if a.active: flag = True
         return flag
 
-    def __writeData(self, filename):
-        enviro_file = open(filename, "w")
-        enviroVars = {}
-        enviroVars["Enviro"] = self.__class__.__name__
-        enviroVars["Agents"] = [a.__class__.__name__ for a in self.agents]
-        enviroVars["Legal_Acts"] = self.legalActs
-        enviroVars["Tasks"] = self.tasks
-        enviroVars["Action_Counts"] = self.agentsActCount
-        data = enviroVars
-        data_json = dumps(data)
-        enviro_file.write(data_json + "\n")
-        for state in self.states:
-            data = state
-            data_json = dumps(data)
-            enviro_file.write(data_json + "\n")
+    def __write_data(self, filename):
+        json_file = open(filename, "w")
+        self.enviro_data["Agents"] = [a.__class__.__name__ for a in self.enviro_data["Agents"]]
+        json_data = dumps(self.enviro_data)
+        json_file.write(json_data + "\n")
+        for state_data in self.state_datas:
+            json_data = dumps(state_data)
+            json_file.write(json_data + "\n")

@@ -35,28 +35,28 @@ class Agent:
     __metaclass__ = ABCMeta
 
     def __init__(self):
-        self.legalActs = None
+        self.legal_acts = None
         self.tasks = None
-        self.nextAct = None
-        self.nextPercept = None
+        self.next_act = None
+        self.next_percept = None
         self.active = False
 
-    def init_Agent(self):
-        self.nextAct = None
-        self.nextPercept = None
+    def init_agent(self):
+        self.next_act = None
+        self.next_percept = None
         self.active = True
 
-    def setLegalActs(self, acts):
-        self.legalActs = acts
+    def set_legal_acts(self, acts):
+        self.legal_acts = acts
 
-    def setTasks(self, tasks):
+    def set_tasks(self, tasks):
         self.tasks = tasks
 
     def sense(self, percept):
-        self.nextPercept = percept
+        self.next_percept = percept
 
     def act(self):
-        return self.nextAct
+        return self.next_act
 
     @abstractmethod
     def compute(self):

@@ -20,10 +20,10 @@ class RandomAgent(Agent):
 
     def compute(self):
         seed()
-        self.nextAct = choice(self.legalActs)
+        self.next_act = choice(self.legal_acts)
         flag = True
         for t in self.tasks:
-            if self.nextPercept != t: flag = False
+            if self.next_percept != t: flag = False
         if flag:
             self.active = False
-            self.nextAct = None
+            self.next_act = None

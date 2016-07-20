@@ -38,65 +38,65 @@ class PyAIDEGUI:
         # Frames, buttons, canvas parameters
         info_frame = tkinter.Frame(self.root)
         button_frame = tkinter.Frame(info_frame)
-        _pause = tkinter.Button(button_frame, text ="Play/Pause", command = self.pauseIter)
-        _next = tkinter.Button(button_frame, text ="Next", command = self.incrIter)
-        _prev = tkinter.Button(button_frame, text ="Prev", command = self.decrIter)
-        _reset = tkinter.Button(button_frame, text ="Reset", command = self.resetIter)
+        pause_button = tkinter.Button(button_frame, text ="Play/Pause", command = self.__pause_iter)
+        next_button = tkinter.Button(button_frame, text ="Next", command = self.__incr_iter)
+        prev_button = tkinter.Button(button_frame, text ="Previous", command = self.__decr_iter)
+        reset_button = tkinter.Button(button_frame, text ="Reset", command = self.__reset_iter)
         self.canvas = tkinter.Canvas(self.root, bg = "black")
-        self.text = tkinter.Text(info_frame, font=("Helvetica",10))
+        self.text_field = tkinter.Text(info_frame, font=("Helvetica",10))
 
         # Positioning and layout
         info_frame.place(height=600, width=300, x = 600, y = 0)
         button_frame.place(height=200, width=300, x = 0, y = 400)
-        _pause.place(height=50, width=300, x = 0, y = 0)
-        _next.place(height=50, width=300, x = 0, y = 50)
-        _prev.place(height=50, width=300, x = 0, y = 100)
-        _reset.place(height=50, width=300, x = 0, y = 150)
+        pause_button.place(height=50, width=300, x = 0, y = 0)
+        next_button.place(height=50, width=300, x = 0, y = 50)
+        prev_button.place(height=50, width=300, x = 0, y = 100)
+        reset_button.place(height=50, width=300, x = 0, y = 150)
         self.canvas.place(height=600, width=600, x = 0, y = 0)
-        self.text.place(height=400, width=300, x = 0, y = 0)
+        self.text_field.place(height=400, width=300, x = 0, y = 0)
 
-    def loadFile(self, filename):
+    def __load_file(self, filename):
         json_file = open(filename, "r")
         for json_str in json_file: self.json_data.append(json_str)
-        data = loads(self.json_data[0])
+        enviro_data = loads(self.json_data[0])
         module = __import__("PyAIDE.Enviros.CustomEnviros")
-        class_ = getattr(module, data["Enviro"])
+        class_ = getattr(module, enviro_data["Enviro"])
         self.enviro = class_()
 
     def run(self, filename):
-        self.loadFile(filename)
-        self.animate()
+        self.__load_file(filename)
+        self.__animate()
         self.root.mainloop()
 
-    def animate(self):
-        if not self.pause: self.incrIter()
-        self.drawText()
-        self.drawCanvas()
+    def __animate(self):
+        if not self.pause: self.__incr_iter()
+        self.__draw_text()
+        self._draw_canvas()
         delay = 25
-        self.canvas.after(delay, self.animate)
+        self.canvas.after(delay, self.__animate)
 
-    def drawCanvas(self):
+    def _draw_canvas(self):
         self.canvas.delete(tkinter.ALL)
-        data = loads(self.json_data[1+self.iter])
-        self.enviro.render(self.canvas, data)
+        state_data = loads(self.json_data[1+self.iter])
+        self.enviro.render(self.canvas, state_data)
 
-    def drawText(self):
-        self.text.delete(1.0, tkinter.END)
+    def __draw_text(self):
+        self.text_field.delete(1.0, tkinter.END)
         enviro_data = loads(self.json_data[0])
-        self.text.insert(tkinter.INSERT, "Enviro : " + enviro_data["Enviro"])
-        self.text.insert(tkinter.INSERT, "\nLegal Actions : " + str(enviro_data["Legal_Acts"]))
-        self.text.insert(tkinter.INSERT, "\n\nIteration : " + str(self.iter))
-        self.text.insert(tkinter.INSERT, "\n\n" + self.json_data[1+self.iter][2:-2].replace(", \"", "\n"))
+        self.text_field.insert(tkinter.INSERT, "Enviro : " + enviro_data["Enviro"])
+        self.text_field.insert(tkinter.INSERT, "\nLegal Actions : " + str(enviro_data["Legal_Acts"]))
+        self.text_field.insert(tkinter.INSERT, "\n\nIteration : " + str(self.iter))
+        self.text_field.insert(tkinter.INSERT, "\n\n" + self.json_data[1+self.iter][2:-2].replace(", \"", "\n"))
 
-    def pauseIter(self):
+    def __pause_iter(self):
         self.pause =  not self.pause
 
-    def incrIter(self):
+    def __incr_iter(self):
         if self.iter < len(self.json_data)-2: self.iter += 1
-        else: self.pauseIter()
+        else: self.__pause_iter()
 
-    def decrIter(self):
+    def __decr_iter(self):
         if self.iter > 0: self.iter -= 1
 
-    def resetIter(self):
+    def __reset_iter(self):
         self.iter = 0
